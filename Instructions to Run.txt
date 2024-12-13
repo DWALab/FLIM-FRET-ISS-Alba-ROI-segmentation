@@ -1,0 +1,50 @@
+
+1. Organize your data into one folder per well. Each contains subfolders: "Ch1" "Ch2" "Tau" and corresponding Tiff data.
+          ie. Main Experiment folder contains subfolders WellA1, WellA2 etc. each contains subfolders Ch1, Ch2, Tau
+
+2. Download ISSWatershedSegmentation_Analysis package and make a copy within your Main Experiment folder. 
+
+3. In ISSWatershedSegmentation_Analysis package > Step1_WatershedSegmentation > open 'LoopThroughMultipleDataFolders.m'  
+		Within 'LoopThroughMultipleDataFolders.m' 
+			AT THIS LINE
+				SHOW_IMAGE_DATA = 0; %change to 1 if you wnat to plot and save ROI data
+
+			change 0 to 1 if you want to plot ROIs.
+
+			AT THIS LINE
+			list_of_folders={'',...}
+			insert path to each well within ' '.  ie {'C:\Documents\WellA1',...
+								  'C:\Documents\WellA1'};
+			
+			Insert all paths separated by ,... until end '};    
+			In the example script delete/add lines as needed.
+
+RUN code
+
+4. OPTIONAL. Change ROI selection parameters for your preference. 
+
+ISSWatershedSegmentation_Analysis package > Step1_WatershedSegmentation > open 'ISSWatershedSegmentation.m'
+
+The following lines can be modified. Next to each line we have commented on what these parameters do.  
+
+	log_size = 50;          % Specifiy size of log filter  TRY 10 for sharper ROIs
+	log_sigma = 0.25;        % Specify standard deviation of log filter
+	Pixel_threshold = 10;   %  This value defines the foreground pixel threshold for generating binary objects
+	separation_between_seeds = 2; % Increase this value, the ROIs will be larger *depending on the scaling_threshold  TRY 4 for larger ROIs.
+	scale_threshold = 0.0; % The higher this value then ROIs will be selected in high intesity areas only. TRY 0.4 to start. Set to 0 and Otsu Thresholding is applied instead.  
+	Pixel_connectivity = 8; % Specify the connectivity of the pixels can be 4, 8 
+	color_map = 'jet';      % Specify the color scheme to be used for ROI image
+
+5. In ISSWatershedSegmentation_Analysis package > Step2_data_binning > open 'LoopThroughDataToBin.m'  			
+
+	in line 
+		untransfected_path=
+	specify the path to your Untransfected well within, ' '
+
+	in line
+		list_of_paths
+	copy and paste all other path directories (other than untransfected) from 'LoopThroughMultipleDataFolders.m' script.
+
+
+TIP * If you have multiple cell lines/drug treatments you must run the script separately and select the appropriate untransfected well for each set of wells.  
+
